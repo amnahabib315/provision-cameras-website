@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | ProVision Cameras</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Navbar - Same as original */
+        .navbar {
+            background-color: var(--primary);
+            padding: 12px 0;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: white !important;
+            padding: 8px 15px !important;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--secondary);
+            border-radius: 5px;
+        }
+
+        .dropdown-menu {
+            background-color: var(--primary);
+        }
+
+        .dropdown-item {
+            color: white;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--secondary);
+        }
+
+        .cart-btn {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Cart Header */
+        .cart-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+        }
+
+        .cart-header h1 {
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+
+        .cart-header p {
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Cart Container */
+        .cart-container {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 15px;
+        }
+
+        /* Cart Row */
+        .cart-row {
+            display: flex;
+            gap: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .cart-row {
+                flex-direction: column;
+            }
+        }
+
+        /* Cart Items */
+        .cart-items {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .cart-title {
+            font-size: 1.4em;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            font-weight: 600;
+        }
+
+        .cart-title span {
+            background: var(--secondary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 8px;
+        }
+
+        /* Cart Item */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .item-image i {
+            font-size: 1.8em;
+            color: var(--gray);
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-size: 1.1em;
+        }
+
+        .item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .qty-btn {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .qty-btn:hover {
+            background: var(--secondary);
+        }
+
+        .qty-display {
+            padding: 0 10px;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        .remove-btn:hover {
+            background: #c0392b;
+        }
+
+        .item-total {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2em;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-cart i {
+            font-size: 3em;
+            color: #ccc;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .empty-cart p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        @media (max-width: 992px) {
+            .cart-summary {
+                width: 100%;
+            }
+        }
+
+        .summary-title {
+            font-size: 1.3em;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+            font-weight: 600;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row.total {
+            border-top: 2px solid var(--primary);
+            border-bottom: none;
+            font-weight: 700;
+            color: var(--primary);
+            margin-top: 10px;
+            padding-top: 12px;
+            font-size: 1.2em;
+        }
+
+        .summary-buttons {
+            margin-top: 20px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .checkout-btn:hover {
+            background: #229954;
+        }
+
+        .shop-btn {
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .shop-btn:hover {
+            background: var(--secondary);
+        }
+
+        /* Order Form */
+        .order-form {
+            display: none;
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-top: 20px;
+        }
+
+        .order-form h3 {
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #7f8c8d;
+        }
+
+        .order-btn {
+            padding: 10px 20px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .order-btn:hover {
+            background: #229954;
+        }
+
+        /* Message */
+        .alert-message {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Footer - Same as original */
+        .footer-links {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+
+        .footer-links h5 {
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        footer {
+            background-color: #1a252f;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .social-icons a {
+            color: white;
+            margin-right: 15px;
+            font-size: 1.3em;
+        }
+
+        .social-icons a:hover {
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 12px;
+            }
+            
+            .item-image {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .item-controls {
+                margin: 10px 0;
+                justify-content: center;
+            }
+            
+            .item-total {
+                text-align: center;
+                width: 100%;
+            }
+            
+            .cart-header h1 {
+                font-size: 1.6em;
+            }
+            
+            .cart-header p {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR - SAME AS ORIGINAL -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index2.html">
+      <i class="bi bi-camera"></i> ProVision Cameras
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index2.html">Home</a>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Categories</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="dslr2.html">DSLR</a></li>
+            <li><a class="dropdown-item" href="mirrorless2.html">Mirrorless</a></li>
+            <li><a class="dropdown-item" href="compact2.html">Compact</a></li>
+            <li><a class="dropdown-item" href="action2.html">Action</a></li>
+          </ul>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="acessmod.html">Accessories</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="about2.html">About Us</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="contact2.html">Contact Us</a>
+        </li>
+
+        <!-- CART BUTTON - ACTIVE -->
+        <li class="nav-item">
+          <a class="nav-link cart-btn active" href="cart.html">
+            <i class="bi bi-cart3"></i> Cart
+            <span id="cartCount" class="cart-count">0</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Cart Header -->
+<!-- <div class="cart-header">
+  <div class="container">
+    <h1><i class="bi bi-cart3"></i> Your Cart</h1>
+    <p>Review and checkout your items</p>
+  </div>
+</div> -->
+
+<!-- Message Area -->
+<div class="container">
+  <div id="messageArea" class="alert-message"></div>
+</div>
+
+<!-- Cart Content -->
+<div class="cart-container">
+  <div class="cart-row">
+    
+    <!-- Cart Items -->
+    <div class="cart-items">
+      <h3 class="cart-title">Cart Items <span id="itemCount">0</span></h3>
+      
+      <div id="cartItemsContainer">
+        <!-- Cart items will be loaded here -->
+        <div class="empty-cart">
+          <i class="bi bi-cart-x"></i>
+          <h4>Your cart is empty</h4>
+          <p>Add cameras or accessories to get started</p>
+          <a href="index2.html" class="shop-btn">
+            <i class="bi bi-arrow-left"></i> Start Shopping
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cart Summary -->
+    <div class="cart-summary">
+      <h3 class="summary-title">Order Summary</h3>
+      
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>$<span id="subtotal">0.00</span></span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span>$<span id="shipping">10.00</span></span>
+      </div>
+      <div class="summary-row">
+        <span>Tax</span>
+        <span>$<span id="tax">0.00</span></span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span>$<span id="total">0.00</span></span>
+      </div>
+      
+      <div class="summary-buttons">
+        <button class="checkout-btn" id="checkoutBtn">
+          <i class="bi bi-lock"></i> Checkout Now
+        </button>
+        <button class="shop-btn" onclick="window.location.href='index2.html'">
+          <i class="bi bi-arrow-left"></i> Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Order Form -->
+  <div class="order-form" id="orderFormSection">
+    <h3><i class="bi bi-truck"></i> Checkout Information</h3>
+    
+    <form id="orderForm">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" class="form-control" id="fullName" placeholder="Enter your name" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" class="form-control" id="phone" placeholder="Enter your phone" required>
+      </div>
+      
+      <div class="form-group">
+        <label>Shipping Address</label>
+        <textarea class="form-control" id="address" rows="2" placeholder="Your complete address" required></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Payment Method</label>
+        <select class="form-control" id="paymentMethod" required>
+          <option value="">Select payment method</option>
+          <option value="credit">Credit/Debit Card</option>
+          <option value="paypal">PayPal</option>
+          <option value="cod">Cash on Delivery</option>
+        </select>
+      </div>
+      
+      <div class="form-buttons">
+        <button type="button" class="back-btn" id="backToCartBtn">
+          <i class="bi bi-arrow-left"></i> Back to Cart
+        </button>
+        <button type="button" class="order-btn" id="placeOrderBtn">
+          <i class="bi bi-check-circle"></i> Place Order
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- FOOTER - SAME AS ORIGINAL -->
+<footer>
+  <div class="footer-links">
+    <div class="container">
+      <div class="row">
+        
+        <div class="col-md-4 mb-3">
+          <h5>Get to Know Us</h5>
+          <ul class="list-unstyled">
+            <li><a href="about2.html">About Us</a></li>
+            <li><a href="contact2.html">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+          <h5>Shop</h5>
+          <ul class="list-unstyled">
+            <li><a href="index2.html">Cameras</a></li>
+            <li><a href="acessmod.html">Accessories</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+          <h5>Follow Us</h5>
+          <div class="social-icons">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <p class="mb-0">&copy; 2025 ProVision Cameras. All rights reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // ============================================
+  // SIMPLE CART FUNCTIONALITY
+  // ============================================
+
+  // Shopping cart array
+  var shoppingCart = [];
+
+  // Load cart from localStorage
+  function loadCart() {
+    var savedCart = localStorage.getItem("provisionCart");
+    if (savedCart) {
+      shoppingCart = JSON.parse(savedCart);
+      updateCartDisplay();
+    }
+  }
+
+  // Save cart to localStorage
+  function saveCart() {
+    localStorage.setItem("provisionCart", JSON.stringify(shoppingCart));
+  }
+
+  // Update cart display
+  function updateCartDisplay() {
+    var cartItemsContainer = document.getElementById("cartItemsContainer");
+    var cartCountElement = document.getElementById("cartCount");
+    var itemCountElement = document.getElementById("itemCount");
+    var subtotalElement = document.getElementById("subtotal");
+    var taxElement = document.getElementById("tax");
+    var totalElement = document.getElementById("total");
+    
+    if (!cartItemsContainer) return;
+    
+    // Calculate totals
+    var itemCount = 0;
+    var subtotal = 0;
+    
+    for (var i = 0; i < shoppingCart.length; i++) {
+      itemCount += shoppingCart[i].quantity;
+      subtotal += shoppingCart[i].price * shoppingCart[i].quantity;
+    }
+    
+    // Update counts
+    if (cartCountElement) cartCountElement.textContent = itemCount;
+    if (itemCountElement) itemCountElement.textContent = itemCount;
+    
+    // Calculate tax (10% of subtotal)
+    var tax = subtotal * 0.1;
+    var shipping = 10;
+    var total = subtotal + tax + shipping;
+    
+    // Update price displays
+    if (subtotalElement) subtotalElement.textContent = subtotal.toFixed(2);
+    if (taxElement) taxElement.textContent = tax.toFixed(2);
+    if (totalElement) totalElement.textContent = total.toFixed(2);
+    
+    // Update cart items display
+    if (shoppingCart.length === 0) {
+      cartItemsContainer.innerHTML = `
+        <div class="empty-cart">
+          <i class="bi bi-cart-x"></i>
+          <h4>Your cart is empty</h4>
+          <p>Add cameras or accessories to get started</p>
+          <a href="index2.html" class="shop-btn">
+            <i class="bi bi-arrow-left"></i> Start Shopping
+          </a>
+        </div>
+      `;
+    } else {
+      var cartHTML = '';
+      
+      for (var i = 0; i < shoppingCart.length; i++) {
+        var item = shoppingCart[i];
+        var itemTotal = item.price * item.quantity;
+        
+        cartHTML += `
+          <div class="cart-item">
+            <div class="item-image">
+              <i class="bi bi-camera"></i>
+            </div>
+            <div class="item-details">
+              <div class="item-name">${item.name}</div>
+              <div class="item-price">$${item.price} each</div>
+            </div>
+            <div class="item-controls">
+              <div class="quantity-box">
+                <button class="qty-btn" onclick="updateQuantity(${i}, -1)">-</button>
+                <span class="qty-display">${item.quantity}</span>
+                <button class="qty-btn" onclick="updateQuantity(${i}, 1)">+</button>
+              </div>
+              <button class="remove-btn" onclick="removeItem(${i})">
+                <i class="bi bi-trash"></i> Remove
+              </button>
+            </div>
+            <div class="item-total">
+              $${itemTotal.toFixed(2)}
+            </div>
+          </div>
+        `;
+      }
+      
+      cartItemsContainer.innerHTML = cartHTML;
+    }
+    
+    // Save to localStorage
+    saveCart();
+  }
+
+  // Update item quantity
+  function updateQuantity(index, change) {
+    if (index >= 0 && index < shoppingCart.length) {
+      shoppingCart[index].quantity += change;
+      
+      if (shoppingCart[index].quantity <= 0) {
+        shoppingCart.splice(index, 1);
+        showMessage("Item removed from cart", false);
+      } else {
+        showMessage("Quantity updated", false);
+      }
+      
+      updateCartDisplay();
+    }
+  }
+
+  // Remove item from cart
+  function removeItem(index) {
+    if (index >= 0 && index < shoppingCart.length) {
+      var removedItem = shoppingCart[index].name;
+      shoppingCart.splice(index, 1);
+      updateCartDisplay();
+      showMessage(removedItem + " removed from cart", false);
+    }
+  }
+
+  // Show message
+  function showMessage(message, isError) {
+    var messageDiv = document.getElementById("messageArea");
+    if (messageDiv) {
+      messageDiv.innerHTML = message;
+      messageDiv.style.display = "block";
+      messageDiv.className = isError ? "alert-message alert-error" : "alert-message alert-success";
+      
+      setTimeout(function() {
+        messageDiv.style.display = "none";
+      }, 3000);
+    }
+  }
+
+  // Checkout button click
+  document.getElementById("checkoutBtn").addEventListener("click", function() {
+    if (shoppingCart.length === 0) {
+      showMessage("Add items to cart before checkout", true);
+      return;
+    }
+    
+    // Show order form
+    document.getElementById("orderFormSection").style.display = "block";
+    
+    // Scroll to form
+    document.getElementById("orderFormSection").scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Back to cart button
+  document.getElementById("backToCartBtn").addEventListener("click", function() {
+    document.getElementById("orderFormSection").style.display = "none";
+  });
+
+  // Place order button
+  document.getElementById("placeOrderBtn").addEventListener("click", function() {
+    // Get form values
+    var fullName = document.getElementById("fullName").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var phone = document.getElementById("phone").value.trim();
+    var address = document.getElementById("address").value.trim();
+    var paymentMethod = document.getElementById("paymentMethod").value;
+    
+    // Validate form
+    if (!fullName || !email || !phone || !address || !paymentMethod) {
+      showMessage("Please fill all fields", true);
+      return;
+    }
+    
+    // Validate email
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      showMessage("Enter valid email address", true);
+      return;
+    }
+    
+    // Calculate order total
+    var subtotal = 0;
+    for (var i = 0; i < shoppingCart.length; i++) {
+      subtotal += shoppingCart[i].price * shoppingCart[i].quantity;
+    }
+    var tax = subtotal * 0.1;
+    var shipping = 10;
+    var total = subtotal + tax + shipping;
+    
+    // Create order summary
+    var orderSummary = "ORDER CONFIRMATION\n\n";
+    orderSummary += "Thank you for your order!\n\n";
+    orderSummary += "Order Details:\n";
+    orderSummary += "----------------\n";
+    
+    for (var i = 0; i < shoppingCart.length; i++) {
+      var item = shoppingCart[i];
+      orderSummary += `${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}\n`;
+    }
+    
+    orderSummary += "\n";
+    orderSummary += `Subtotal: $${subtotal.toFixed(2)}\n`;
+    orderSummary += `Tax: $${tax.toFixed(2)}\n`;
+    orderSummary += `Shipping: $${shipping.toFixed(2)}\n`;
+    orderSummary += `Total: $${total.toFixed(2)}\n\n`;
+    
+    orderSummary += "Shipping Information:\n";
+    orderSummary += "----------------\n";
+    orderSummary += `Name: ${fullName}\n`;
+    orderSummary += `Email: ${email}\n`;
+    orderSummary += `Phone: ${phone}\n`;
+    orderSummary += `Address: ${address}\n`;
+    orderSummary += `Payment: ${paymentMethod}\n\n`;
+    
+    orderSummary += "Your order will be shipped in 3-5 days.\n";
+    orderSummary += "Thank you for shopping with us!";
+    
+    // Show confirmation
+    alert(orderSummary);
+    
+    // Clear cart and form
+    shoppingCart = [];
+    updateCartDisplay();
+    document.getElementById("orderForm").reset();
+    document.getElementById("orderFormSection").style.display = "none";
+    
+    // Show success message
+    showMessage("Order placed successfully! Thank you.", false);
+    
+    // Clear localStorage
+    localStorage.removeItem("provisionCart");
+    
+    // Redirect to homepage
+    setTimeout(function() {
+      window.location.href = "index2.html";
+    }, 3000);
+  });
+
+  // Initialize cart when page loads
+  window.onload = function() {
+    loadCart();
+  };
+
+</script>
+
+</body>
+</html>

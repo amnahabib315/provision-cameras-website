@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | ProVision Cameras</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --gray: #95a5a6;
+      --white: #ffffff;
+    }
+
+    body {
+      background-color: var(--light);
+    }
+
+    /* NAVBAR (updated with cart button) */
+    .navbar {
+      background-color: var(--primary);
+    }
+
+    .navbar-brand {
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .nav-link {
+      color: white !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: var(--secondary);
+      border-radius: 5px;
+    }
+
+    /* Cart button in navbar */
+    .cart-btn {
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Dropdown menu colors */
+    .dropdown-menu {
+      background-color: var(--primary) !important;
+      border: none;
+    }
+
+    .dropdown-item {
+      color: white !important;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--secondary) !important;
+      color: white !important;
+    }
+
+    /* Contact card */
+    .contact-card {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .contact-card .form-control {
+      margin-bottom: 5px;
+      border: 2px solid #ddd;
+    }
+
+    .contact-card .form-control:focus {
+      border-color: var(--secondary);
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--secondary);
+    }
+
+    /* Footer */
+    .footer-links {
+      background-color: var(--dark);
+      color: white;
+      padding: 40px 0;
+    }
+
+    .footer-links h5 {
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .footer-links a {
+      color: #bbb;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    footer {
+      background-color: #1a252f;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    /* Simple form styling */
+    .form-message {
+      display: none;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    .form-message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR (Updated with Cart Button) -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index2.html">
+      <i class="bi bi-camera"></i> ProVision Cameras
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index2.html">Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Categories</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="dslr2.html">DSLR</a></li>
+            <li><a class="dropdown-item" href="mirrorless2.html">Mirrorless</a></li>
+            <li><a class="dropdown-item" href="compact2.html">Compact</a></li>
+            <li><a class="dropdown-item" href="action2.html">Action</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="acessories.html">Accessories</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="about2.html">About Us</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link active" href="contact2.html">Contact Us</a>
+        </li>
+
+        <!-- CART BUTTON - NOW LINKS TO SEPARATE CART PAGE -->
+        <li class="nav-item">
+          <a class="nav-link cart-btn" href="cart.html">
+            <i class="bi bi-cart3"></i> Cart
+            <span id="cartCount" class="cart-count">0</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- CONTACT SECTION -->
+<div class="container my-5">
+  <div class="row justify-content-center">
+    
+    <div class="col-md-6">
+
+      <div class="contact-card">
+        <h3 class="text-center mb-3"><i class="bi bi-envelope"></i> Contact Us</h3>
+        <p class="text-center text-muted">Have any questions? Send us a message!</p>
+
+        <!-- Simple form (no JavaScript validation) -->
+        <form id="contactForm">
+          <label class="form-label">Your Name</label>
+          <input type="text" id="contactName" class="form-control" placeholder="Enter your name">
+
+          <label class="form-label">Your Email</label>
+          <input type="email" id="contactEmail" class="form-control" placeholder="Enter your email">
+
+          <label class="form-label">Your Message</label>
+          <textarea id="contactMessage" class="form-control" rows="4" placeholder="Write your message..."></textarea>
+
+          <button type="button" class="btn btn-primary w-100 mt-3" onclick="submitContactForm()">
+            <i class="bi bi-send"></i> Send Message
+          </button>
+
+        </form>
+      </div>
+
+      <!-- CONTACT INFORMATION -->
+      <div class="text-center mt-4">
+        <!-- Contact Information Box (Kept) -->
+        <div class="mt-4 p-3 bg-light rounded">
+          <h6><i class="bi bi-info-circle"></i> Contact Information</h6>
+          <p class="mb-1">Email: info@provisioncameras.com</p>
+          <p class="mb-1">Phone: +1 (234) 567-890</p>
+          <p class="mb-0">Address: 123 Camera Street, Vision City</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4 mb-3">
+          <h5>Get to Know Us</h5>
+          <ul class="list-unstyled">
+            <li><a href="about2.html">About Us</a></li>
+            <li><a href="contact2.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <h5>Shop</h5>
+          <ul class="list-unstyled">
+            <li><a href="index2.html">Cameras</a></li>
+            <li><a href="acessories.html">Accessories</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <h5>Follow Us</h5>
+          <a href="#" class="text-white me-3"><i class="bi bi-facebook" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-instagram" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-twitter" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-youtube" style="font-size: 1.5em;"></i></a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <p class="mb-0">&copy; 2025 ProVision Cameras. All rights reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // ============================================
+  // CONTACT PAGE WITH SEPARATE CART PAGE SYSTEM
+  // ============================================
+
+  // ============================================
+  // CART COUNTER FUNCTIONALITY - SAME AS ALL PAGES
+  // ============================================
+
+  // Function to update cart count in navbar
+  function updateCartCount() {
+    var cartCountElement = document.getElementById("cartCount");
+    if (!cartCountElement) return;
+    
+    // Load cart from localStorage
+    var savedCart = localStorage.getItem("provisionCart");
+    var shoppingCart = savedCart ? JSON.parse(savedCart) : [];
+    
+    // Calculate total items
+    var totalItems = 0;
+    for (var i = 0; i < shoppingCart.length; i++) {
+      totalItems += shoppingCart[i].quantity;
+    }
+    
+    // Update cart count
+    cartCountElement.textContent = totalItems;
+  }
+
+  // ============================================
+  // CONTACT FORM FUNCTIONS
+  // ============================================
+
+  // Simple contact form submission
+  function submitContactForm() {
+    var name = document.getElementById("contactName").value;
+    var email = document.getElementById("contactEmail").value;
+    var message = document.getElementById("contactMessage").value;
+    
+    if (name === "" || email === "" || message === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+    
+    // Basic email validation
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+    
+    alert("Thank you for your message, " + name + "! We'll get back to you soon.");
+    
+    // Clear form
+    document.getElementById("contactForm").reset();
+  }
+
+  // ============================================
+  // PAGE LOAD FUNCTION
+  // ============================================
+
+  // When page loads
+  window.onload = function() {
+    console.log("Contact page loaded - Separate cart page system active");
+    
+    // Update cart count
+    updateCartCount();
+    
+    // Add Enter key support for form
+    document.getElementById("contactForm").onkeypress = function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        submitContactForm();
+      }
+    };
+  };
+
+</script>
+
+</body>
+</html>

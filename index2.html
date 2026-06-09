@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProVision Cameras</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --gray: #95a5a6;
+      --white: #ffffff;
+    }
+
+    body {
+      background-color: var(--light);
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--primary);
+    }
+
+    .navbar-brand {
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .nav-link {
+      color: white !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: var(--secondary);
+      border-radius: 5px;
+    }
+
+    .dropdown-menu {
+      background-color: var(--primary);
+    }
+
+    .dropdown-item {
+      color: white;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--secondary);
+    }
+
+    /* Cart button in navbar */
+    .cart-btn {
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Carousel */
+    .carousel-item img {
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .carousel-caption {
+      background-color: rgba(0,0,0,0.5);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    /* Search bar */
+    .search-bar {
+      text-align: center;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      width: 70%;
+      border: 2px solid var(--primary);
+      border-radius: 5px;
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      margin-left: 5px;
+    }
+
+    /* Welcome section */
+    .welcome-brief {
+      background-color: var(--primary);
+      color: white;
+      padding: 40px;
+      border-radius: 10px;
+    }
+
+    /* Info text */
+    .info {
+      background-color: var(--primary);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    /* Category cards */
+    .category-item {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .category-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+
+    .category-item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    /* Button */
+    .btn-primary {
+      background-color: var(--primary);
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--secondary);
+    }
+
+    /* Newsletter */
+    .newsletter {
+      background-color: var(--gray);
+      color: black;
+      padding: 40px 0;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+
+    /* Footer */
+    .footer-links {
+      background-color: var(--dark);
+      color: white;
+      padding: 40px 0;
+    }
+
+    .footer-links h5 {
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .footer-links a {
+      color: #bbb;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    footer {
+      background-color: #1a252f;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    /* JavaScript Message Styles */
+    .js-message {
+      background-color: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 5px;
+      margin: 10px 0;
+      text-align: center;
+      display: none;
+    }
+
+    .js-error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    .search-suggestions {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-top: 5px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+      position: absolute;
+      width: 75%;
+      z-index: 1000;
+    }
+
+    .search-suggestion {
+      padding: 10px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+    }
+
+    .search-suggestion:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 1. NAVBAR (WITH CART BUTTON) -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index2.html">
+      <i class="bi bi-camera"></i> ProVision Cameras
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <!-- Home link marked as active -->
+          <a class="nav-link active" href="index2.html">Home</a>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Categories</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="dslr2.html">DSLR</a></li>
+            <li><a class="dropdown-item" href="mirrorless2.html">Mirrorless</a></li>
+            <li><a class="dropdown-item" href="compact2.html">Compact</a></li>
+            <li><a class="dropdown-item" href="action2.html">Action</a></li>
+          </ul>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="acessories.html">Accessories</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="about2.html">About Us</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="contact2.html">Contact Us</a>
+        </li>
+
+        <!-- CART BUTTON - NOW LINKS TO SEPARATE CART PAGE -->
+        <li class="nav-item">
+          <a class="nav-link cart-btn" href="cart.html">
+            <i class="bi bi-cart3"></i> Cart
+            <span id="cartCount" class="cart-count">0</span>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- 3. SEARCH BAR -->
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="search-bar">
+        <input type="text" id="searchInput" class="form-control d-inline" style="width: 75%; display: inline-block;" placeholder="Search cameras, accessories...">
+        <button class="btn btn-primary" id="searchButton">Search</button>
+        <div id="searchSuggestions" class="search-suggestions"></div>
+      </div>
+      <div id="searchResult" class="text-center mt-2"></div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript Message Area -->
+<div class="container">
+  <div id="jsMessage" class="js-message"></div>
+</div>
+
+<!-- 4. WELCOME SECTION -->
+<div class="container my-4">
+  <div class="welcome-brief text-center">
+    <h2>Welcome to ProVision Cameras</h2>
+    <p>We're passionate about helping photographers capture life's best moments. Explore our diverse range of cameras and find the perfect match for your creativity!</p>
+  </div>
+</div>
+
+<!-- 2. CAROUSEL -->
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+  
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+    <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+  </div>
+  
+  <div class="carousel-inner">
+    
+    <!-- DSLR -->
+    <div class="carousel-item active">
+      <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1200" class="d-block w-100" alt="DSLR">
+      <div class="carousel-caption">
+        <h3>Professional DSLR Cameras</h3>
+        <p>Capture every moment in stunning detail</p>
+        <a href="dslr2.html" class="btn btn-primary">Shop Now</a>
+      </div>
+    </div>
+    
+    <!-- Mirrorless -->
+    <div class="carousel-item">
+      <img src="https://images.unsplash.com/photo-1617005082133-548c4dd27f35?w=1200" class="d-block w-100" alt="Mirrorless">
+      <div class="carousel-caption">
+        <h3>Mirrorless Cameras</h3>
+        <p>Lightweight and powerful</p>
+        <a href="mirrorless2.html" class="btn btn-primary">Shop Now</a>
+      </div>
+    </div>
+    
+    <!-- Action -->
+    <div class="carousel-item">
+      <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=1200" class="d-block w-100" alt="Action">
+      <div class="carousel-caption">
+        <h3>Action Cameras</h3>
+        <p>Built for adventure</p>
+        <a href="action2.html" class="btn btn-primary">Shop Now</a>
+      </div>
+    </div>
+
+    <!-- Compact - NEW -->
+    <div class="carousel-item">
+      <img src="https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=1200" class="d-block w-100" alt="Compact">
+      <div class="carousel-caption">
+        <h3>Compact Cameras</h3>
+        <p>Small, portable, and powerful for everyday shooting</p>
+        <a href="compact2.html" class="btn btn-primary">Shop Now</a>
+      </div>
+    </div>
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- INFO TEXT -->
+<div class="container mb-4 mt-3">
+  <div class="info">
+    <p class="mb-0 ">Explore our four specialized categories for every photography need</p>
+  </div>
+</div>
+
+<!-- CATEGORY CARDS -->
+<div class="container mb-5">
+  <div class="row">
+    
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="category-item" data-category="dslr">
+        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400" alt="DSLR">
+        <h5 class="mt-3">DSLR Cameras</h5>
+        <a href="dslr2.html" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="category-item" data-category="mirrorless">
+        <img src="https://images.unsplash.com/photo-1617005082133-548c4dd27f35?w=400" alt="Mirrorless">
+        <h5 class="mt-3">Mirrorless Cameras</h5>
+        <a href="mirrorless2.html" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="category-item" data-category="compact">
+        <img src="https://images.unsplash.com/photo-1564466809058-bf4114d55352?w=400" alt="Compact">
+        <h5 class="mt-3">Compact Cameras</h5>
+        <a href="compact2.html" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="category-item" data-category="action">
+        <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400" alt="Action">
+        <h5 class="mt-3">Action Cameras</h5>
+        <a href="action2.html" class="btn btn-primary btn-sm">View</a>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h4>For the latest camera deals and photography tips!</h4>
+  <div class="container my-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="search-bar">
+          <input type="email" id="newsletterEmail" class="form-control d-inline" style="width: 75%; display: inline-block;" placeholder="Enter your email">
+          <button class="btn btn-primary" id="subscribeButton">Subscribe</button>
+        </div>
+        <div id="subscriptionMessage" class="js-message"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <div class="container">
+      <div class="row">
+        
+        <div class="col-md-4 mb-3">
+          <h5>Get to Know Us</h5>
+          <ul class="list-unstyled">
+         <li><a href="about2.html">About Us</a></li>
+            <li><a href="contact2.html">Contact Us</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+          <h5>Shop</h5>
+          <ul class="list-unstyled">
+            <li><a href="index2.html">Cameras</a></li>
+            <li><a href="acessories.html">Accessories</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+          <h5>Follow Us</h5>
+          <a href="#" class="text-white me-3"><i class="bi bi-facebook" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-instagram" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-twitter" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-youtube" style="font-size: 1.5em;"></i></a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <p class="mb-0">&copy; 2025 ProVision Cameras. All rights reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // ============================================
+  // HOMEPAGE FUNCTIONALITY WITH CART COUNTER
+  // ============================================
+  
+  // Array of searchable items with their pages - UPDATED WITH CORRECT PAGE NAMES
+  var searchItems = [
+    {name: "DSLR Camera", page: "dslr2.html", type: "category"},
+    {name: "Mirrorless Camera", page: "mirrorless2.html", type: "category"},
+    {name: "Compact Camera", page: "compact2.html", type: "category"},
+    {name: "Action Camera", page: "action2.html", type: "category"},
+    {name: "Zoom Lens", page: "acessories.html", type: "accessory"},
+    {name: "Prime Lens", page: "acessories.html", type: "accessory"},
+    {name: "Camera Bag", page: "acessories.html", type: "accessory"},
+    {name: "Tripod", page: "acessories.html", type: "accessory"},
+    {name: "Memory Card", page: "acessories.html", type: "accessory"}
+  ];
+
+  // ============================================
+  // CART COUNTER FUNCTIONALITY
+  // ============================================
+
+  // Function to update cart count in navbar
+  function updateCartCount() {
+    var cartCountElement = document.getElementById("cartCount");
+    if (!cartCountElement) return;
+    
+    // Load cart from localStorage
+    var savedCart = localStorage.getItem("provisionCart");
+    var shoppingCart = savedCart ? JSON.parse(savedCart) : [];
+    
+    // Calculate total items
+    var totalItems = 0;
+    for (var i = 0; i < shoppingCart.length; i++) {
+      totalItems += shoppingCart[i].quantity;
+    }
+    
+    // Update cart count
+    cartCountElement.textContent = totalItems;
+  }
+
+  // ============================================
+  // HOMEPAGE SPECIFIC FUNCTIONS
+  // ============================================
+
+  // Function to show messages
+  function showMessage(message, isError) {
+    var messageDiv = document.getElementById("jsMessage");
+    if (messageDiv) {
+      messageDiv.innerHTML = message;
+      messageDiv.style.display = "block";
+      
+      if (isError) {
+        messageDiv.className = "js-message js-error";
+      } else {
+        messageDiv.className = "js-message";
+      }
+      
+      setTimeout(function() {
+        messageDiv.style.display = "none";
+      }, 3000);
+    }
+  }
+
+  // Function to search and redirect
+  function searchAndRedirect() {
+    var searchText = document.getElementById("searchInput").value;
+    var resultDiv = document.getElementById("searchResult");
+    
+    resultDiv.innerHTML = "";
+    
+    if (searchText === "") {
+      resultDiv.innerHTML = '<p class="text-warning">Please enter a search term</p>';
+      return;
+    }
+    
+    searchText = searchText.toLowerCase();
+    var foundItems = [];
+    
+    for (var i = 0; i < searchItems.length; i++) {
+      var itemName = searchItems[i].name.toLowerCase();
+      
+      if (itemName.includes(searchText)) {
+        foundItems.push(searchItems[i]);
+      }
+    }
+    
+    if (foundItems.length > 0) {
+      window.location.href = foundItems[0].page;
+      showMessage("Redirecting to " + foundItems[0].name + " page", false);
+    } else {
+      resultDiv.innerHTML = '<p class="text-danger">No items found. Try: DSLR, Mirrorless, Lens, Bag, Tripod</p>';
+    }
+  }
+
+  // Function to show search suggestions
+  function showSearchSuggestions() {
+    var searchText = document.getElementById("searchInput").value;
+    var suggestionsDiv = document.getElementById("searchSuggestions");
+    
+    if (searchText === "") {
+      suggestionsDiv.style.display = "none";
+      return;
+    }
+    
+    searchText = searchText.toLowerCase();
+    var suggestions = [];
+    
+    for (var i = 0; i < searchItems.length; i++) {
+      var itemName = searchItems[i].name.toLowerCase();
+      
+      if (itemName.includes(searchText)) {
+        suggestions.push(searchItems[i]);
+      }
+    }
+    
+    if (suggestions.length > 0) {
+      suggestionsDiv.innerHTML = "";
+      
+      for (var i = 0; i < suggestions.length; i++) {
+        var div = document.createElement("div");
+        div.className = "search-suggestion";
+        div.innerHTML = suggestions[i].name + " (" + suggestions[i].type + ")";
+        
+        div.onclick = function() {
+          var itemName = this.innerHTML.split(" (")[0];
+          for (var j = 0; j < searchItems.length; j++) {
+            if (searchItems[j].name === itemName) {
+              window.location.href = searchItems[j].page;
+              break;
+            }
+          }
+        };
+        
+        suggestionsDiv.appendChild(div);
+      }
+      
+      suggestionsDiv.style.display = "block";
+    } else {
+      suggestionsDiv.style.display = "none";
+    }
+  }
+
+  // Function to handle newsletter subscription
+  function subscribeNewsletter() {
+    var email = document.getElementById("newsletterEmail").value;
+    var messageDiv = document.getElementById("subscriptionMessage");
+    
+    var hasAt = email.includes("@");
+    var hasDot = email.includes(".");
+    
+    if (email === "") {
+      messageDiv.innerHTML = "Please enter your email";
+      messageDiv.className = "js-message js-error";
+      messageDiv.style.display = "block";
+      return;
+    }
+    
+    if (!hasAt || !hasDot) {
+      messageDiv.innerHTML = "Please enter a valid email address";
+      messageDiv.className = "js-message js-error";
+      messageDiv.style.display = "block";
+      return;
+    }
+    
+    messageDiv.innerHTML = "Thank you for subscribing! You'll receive our latest deals.";
+    messageDiv.className = "js-message";
+    messageDiv.style.display = "block";
+    
+    document.getElementById("newsletterEmail").value = "";
+    
+    setTimeout(function() {
+      messageDiv.style.display = "none";
+    }, 3000);
+  }
+
+  // ============================================
+  // SETUP EVENT LISTENERS
+  // ============================================
+
+  window.onload = function() {
+    console.log("Homepage loaded - Separate cart page system active");
+    
+    // Update cart count
+    updateCartCount();
+    
+    // HOMEPAGE SPECIFIC SETUP
+    var searchButton = document.getElementById("searchButton");
+    if (searchButton) {
+      searchButton.onclick = searchAndRedirect;
+    }
+    
+    var searchInput = document.getElementById("searchInput");
+    if (searchInput) {
+      searchInput.oninput = showSearchSuggestions;
+      
+      searchInput.onkeypress = function(event) {
+        if (event.key === "Enter") {
+          searchAndRedirect();
+        }
+      };
+    }
+    
+    var subscribeButton = document.getElementById("subscribeButton");
+    if (subscribeButton) {
+      subscribeButton.onclick = subscribeNewsletter;
+    }
+    
+    var newsletterEmail = document.getElementById("newsletterEmail");
+    if (newsletterEmail) {
+      newsletterEmail.onkeypress = function(event) {
+        if (event.key === "Enter") {
+          subscribeNewsletter();
+        }
+      };
+    }
+    
+    document.addEventListener("click", function(event) {
+      var suggestionsDiv = document.getElementById("searchSuggestions");
+      var searchInput = document.getElementById("searchInput");
+      
+      if (event.target !== searchInput && event.target !== suggestionsDiv) {
+        if (suggestionsDiv) {
+          suggestionsDiv.style.display = "none";
+        }
+      }
+    });
+    
+    showMessage("Welcome to ProVision Cameras! Happy shopping.", false);
+    
+    console.log("Homepage loaded - Cart system uses separate cart.html page");
+  };
+
+  // Make updateCartCount function available globally for other pages
+  window.updateCartCount = updateCartCount;
+
+</script>
+
+</body>
+</html>

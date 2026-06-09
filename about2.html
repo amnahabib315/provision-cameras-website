@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | ProVision Cameras</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --gray: #95a5a6;
+      --white: #ffffff;
+    }
+
+    body {
+      background-color: var(--light);
+    }
+
+    /* Navbar (updated with cart button) */
+    .navbar {
+      background-color: var(--primary);
+    }
+
+    .navbar-brand {
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .nav-link {
+      color: white !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background-color: var(--secondary);
+      border-radius: 5px;
+    }
+
+    /* Cart button in navbar */
+    .cart-btn {
+      position: relative;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dropdown-menu {
+      background-color: var(--primary);
+    }
+
+    .dropdown-item {
+      color: white;
+    }
+
+    .dropdown-item:hover {
+      background-color: var(--secondary);
+    }
+
+    /* MAIN ABOUT TEXT */
+    .about {
+      background-color: #2c3e50;
+      color: white;
+      padding: 40px 20px;
+      border-radius: 10px;
+      margin: 30px auto;
+      max-width: 900px;
+    }
+
+    /* About Cards */
+    .about-card {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      height: 100%;
+      text-align: center;
+    }
+
+    .about-card i {
+      font-size: 2.5em;
+      color: var(--secondary);
+      margin-bottom: 15px;
+    }
+
+    /* Footer */
+    .footer-links {
+      background-color: var(--dark);
+      color: white;
+      padding: 40px 0;
+    }
+
+    .footer-links h5 {
+      border-bottom: 2px solid var(--secondary);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .footer-links a {
+      color: #bbb;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    footer {
+      background-color: #1a252f;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR (Updated with Cart Button) -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index2.html">
+      <i class="bi bi-camera"></i> ProVision Cameras
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index2.html">Home</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Categories</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="dslr2.html">DSLR</a></li>
+            <li><a class="dropdown-item" href="mirrorless2.html">Mirrorless</a></li>
+            <li><a class="dropdown-item" href="compact2.html">Compact</a></li>
+            <li><a class="dropdown-item" href="action2.html">Action</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="acessories.html">Accessories</a>
+        </li>
+
+        <li class="nav-item">
+          <!-- About Us link marked as active -->
+          <a class="nav-link active" href="about2.html">About Us</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="contact2.html">Contact Us</a>
+        </li>
+
+        <!-- CART BUTTON - NOW LINKS TO SEPARATE CART PAGE -->
+        <li class="nav-item">
+          <a class="nav-link cart-btn" href="cart.html">
+            <i class="bi bi-cart3"></i> Cart
+            <span id="cartCount" class="cart-count">0</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- CART MODAL (Same as other pages) -->
+<div class="modal fade" id="cartModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Your Shopping Cart</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modalCartItems">
+          <p>Your cart is empty</p>
+        </div>
+        
+        <div class="mt-3">
+          <h5>Order Summary</h5>
+          <p>Total Items: <span id="modalTotalItems">0</span></p>
+          <p>Total Price: $<span id="modalTotalPrice">0</span></p>
+        </div>
+        
+        <hr>
+        
+        <!-- Order Form -->
+        <h5>Place Your Order</h5>
+        <form id="orderForm">
+          <div class="mb-3">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="orderName" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="orderEmail" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="orderPhone" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Shipping Address</label>
+            <textarea class="form-control" id="orderAddress" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Payment Method</label>
+            <select class="form-control" id="orderPayment" required>
+              <option value="">Select Payment</option>
+              <option value="cod">Cash on Delivery</option>
+              <option value="card">Credit/Debit Card</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue Shopping</button>
+        <button type="button" class="btn btn-danger" id="clearCartBtn">Clear Cart</button>
+        <button type="button" class="btn btn-primary" id="placeOrderBtn">Place Order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN ABOUT TEXT -->
+<div class="container">
+  <div class="about">
+    <div class="text-center">
+      <h2 class="mb-4">About ProVision Cameras</h2>
+      <p class="lead mb-0">
+        ProVision Cameras is a trusted online camera store offering a wide range
+        of cameras, lenses, tripods, and accessories. Our goal is to provide
+        photographers with the tools they need to capture their best moments.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+<!-- VISION & MISSION -->
+<div class="container my-5">
+  <div class="row justify-content-center">
+
+    <div class="col-md-5 mb-4">
+      <div class="about-card">
+        <i class="bi bi-eye"></i>
+        <h4>Our Vision</h4>
+        <p>Quality assurance in every product and excellence in every service.</p>
+      </div>
+    </div>
+
+    <div class="col-md-5 mb-4">
+      <div class="about-card">
+        <i class="bi bi-bullseye"></i>
+        <h4>Our Mission</h4>
+        <p>To empower photographers with premium equipment and reliable support.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- WHY CHOOSE US -->
+<div class="container my-5">
+  <div class="text-center mb-4">
+    <h3>Why Choose Us?</h3>
+  </div>
+
+  <div class="row justify-content-center">
+
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="about-card">
+        <i class="bi bi-award"></i>
+        <h5>Quality Products</h5>
+        <p>Top brands, top performance.</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="about-card">
+        <i class="bi bi-truck"></i>
+        <h5>Fast Delivery</h5>
+        <p>Quick & safe shipping.</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="about-card">
+        <i class="bi bi-headset"></i>
+        <h5>24/7 Support</h5>
+        <p>Always here to help.</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="about-card">
+        <i class="bi bi-shield-check"></i>
+        <h5>Secure Payment</h5>
+        <p>100% safe checkout.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-4 mb-3">
+          <h5>Get to Know Us</h5>
+          <ul class="list-unstyled">
+            <li><a href="about2.html">About Us</a></li>
+            <li><a href="contact2.html">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <h5>Shop</h5>
+          <ul class="list-unstyled">
+            <li><a href="index2.html">Cameras</a></li>
+            <li><a href="acessories.html">Accessories</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <h5>Follow Us</h5>
+          <a href="#" class="text-white me-3"><i class="bi bi-facebook" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-instagram" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white me-3"><i class="bi bi-twitter" style="font-size: 1.5em;"></i></a>
+          <a href="#" class="text-white"><i class="bi bi-youtube" style="font-size: 1.5em;"></i></a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <p class="mb-0">&copy; 2025 ProVision Cameras. All rights reserved.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // ============================================
+  // Simple Cart Functionality for About Page
+  // ============================================
+
+  // Array for shopping cart (shared with other pages via localStorage)
+  var shoppingCart = [];
+
+  // Function to load cart from localStorage
+  function loadCartFromStorage() {
+    var savedCart = localStorage.getItem("provisionCart");
+    
+    if (savedCart) {
+      // Convert string back to array
+      shoppingCart = JSON.parse(savedCart);
+      updateCartDisplay();
+    }
+  }
+
+  // Function to update cart display
+  function updateCartDisplay() {
+    var modalCartDiv = document.getElementById("modalCartItems");
+    var totalItems = 0;
+    var totalPrice = 0;
+    
+    // Clear cart display
+    modalCartDiv.innerHTML = "";
+    
+    // If cart is empty
+    if (shoppingCart.length === 0) {
+      modalCartDiv.innerHTML = "<p>Your cart is empty</p>";
+    } else {
+      // Loop through cart items
+      for (var i = 0; i < shoppingCart.length; i++) {
+        var item = shoppingCart[i];
+        var itemTotal = item.price * item.quantity;
+        
+        // Add to totals
+        totalItems = totalItems + item.quantity;
+        totalPrice = totalPrice + itemTotal;
+        
+        // Add to modal display
+        modalCartDiv.innerHTML += '<div class="d-flex justify-content-between mb-2 align-items-center">' +
+                                '<div>' + item.name + ' x' + item.quantity + '</div>' +
+                                '<div>$' + itemTotal + ' <button class="btn btn-sm btn-danger ms-2 remove-item" data-index="' + i + '">X</button></div>' +
+                                '</div>';
+      }
+    }
+    
+    // Update summary in modal
+    document.getElementById("modalTotalItems").innerHTML = totalItems;
+    document.getElementById("modalTotalPrice").innerHTML = totalPrice;
+    
+    // Update cart count in navbar
+    document.getElementById("cartCount").innerHTML = totalItems;
+    
+    // Save cart to localStorage
+    saveCartToStorage();
+    
+    // Add event listeners to remove buttons
+    var removeButtons = document.getElementsByClassName("remove-item");
+    for (var i = 0; i < removeButtons.length; i++) {
+      removeButtons[i].onclick = function() {
+        var index = parseInt(this.getAttribute("data-index"));
+        removeFromCart(index);
+      };
+    }
+  }
+
+  // Function to remove item from cart
+  function removeFromCart(index) {
+    if (index >= 0 && index < shoppingCart.length) {
+      var removedItem = shoppingCart[index].name;
+      shoppingCart.splice(index, 1);
+      updateCartDisplay();
+      alert("Removed " + removedItem + " from cart");
+    }
+  }
+
+  // Function to save cart to localStorage
+  function saveCartToStorage() {
+    // Convert array to string and save
+    var cartString = JSON.stringify(shoppingCart);
+    localStorage.setItem("provisionCart", cartString);
+  }
+
+  // Function to clear cart
+  function clearCart() {
+    shoppingCart = [];
+    updateCartDisplay();
+    alert("Cart cleared");
+  }
+
+  // Function to place order
+  function placeOrder() {
+    // Get form values
+    var name = document.getElementById("orderName").value;
+    var email = document.getElementById("orderEmail").value;
+    var phone = document.getElementById("orderPhone").value;
+    var address = document.getElementById("orderAddress").value;
+    var payment = document.getElementById("orderPayment").value;
+    
+    // Validate form
+    if (name === "" || email === "" || phone === "" || address === "" || payment === "") {
+      alert("Please fill all order details");
+      return;
+    }
+    
+    if (shoppingCart.length === 0) {
+      alert("Your cart is empty");
+      return;
+    }
+    
+    // Calculate total
+    var total = 0;
+    for (var i = 0; i < shoppingCart.length; i++) {
+      total = total + (shoppingCart[i].price * shoppingCart[i].quantity);
+    }
+    
+    // Show order confirmation
+    var orderDetails = "Order placed successfully!\n\n";
+    orderDetails += "Name: " + name + "\n";
+    orderDetails += "Email: " + email + "\n";
+    orderDetails += "Phone: " + phone + "\n";
+    orderDetails += "Address: " + address + "\n";
+    orderDetails += "Payment: " + payment + "\n";
+    orderDetails += "Total: $" + total + "\n";
+    orderDetails += "Items: " + shoppingCart.length + " item(s)\n\n";
+    orderDetails += "Thank you for shopping with ProVision Cameras!";
+    
+    alert(orderDetails);
+    
+    // Clear cart and form
+    clearCart();
+    document.getElementById("orderForm").reset();
+    
+    // Close modal
+    var modal = bootstrap.Modal.getInstance(document.getElementById('cartModal'));
+    modal.hide();
+  }
+
+  // When page loads
+  window.onload = function() {
+    console.log("About page loaded");
+    
+    // Load cart from storage
+    loadCartFromStorage();
+    
+    // Setup cart button
+    document.getElementById("cartButton").onclick = function(event) {
+      event.preventDefault();
+      var cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+      cartModal.show();
+    };
+    
+    // Setup clear cart button
+    document.getElementById("clearCartBtn").onclick = clearCart;
+    
+    // Setup place order button
+    document.getElementById("placeOrderBtn").onclick = placeOrder;
+  };
+
+</script>
+
+</body>
+</html>
