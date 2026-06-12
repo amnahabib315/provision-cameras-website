@@ -75,31 +75,37 @@
         }
 
         /* Search bar */
-        .search-bar {
-            text-align: center;
-        }
-
-        /* .search-bar input {
-            padding: 10px;
-            width: 70%;
-            border: 2px solid var(--primary);
-            border-radius: 5px;
-        } */
-
-        .search-bar input {
-    padding: 10px;
-    width: 70%;
-    max-width: 500px;
-    width: 100%;
-    border: 2px solid var(--primary);
-    border-radius: 5px;
+    
+.search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
 }
 
-        .search-bar button {
-            background-color: var(--primary);
-            padding: 10px 20px;
-            margin-left: 5px;
-        }
+.search-bar input {
+  padding: 10px;
+  flex: 1 1 200px;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+     background-color: var(--primary);
+}
+
+@media (max-width: 480px) {
+  .carousel-item img {
+    height: 220px;
+  }
+  .carousel-caption h3 {
+    font-size: 1.1rem;
+  }
+  .carousel-caption p {
+    font-size: 0.85rem;
+  }
+}
         .search-bar button:hover {
             background-color: var(--secondary);
         }
@@ -325,7 +331,7 @@
 </head>
 <body>
 
-<!-- 1. NAVBAR (Updated with Cart linking to cart.html) -->
+<!-- 1. NAVBAR  -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <div class="container">
     <a class="navbar-brand" href="index2.html">
@@ -363,7 +369,7 @@
           <a class="nav-link" href="contact2.html">Contact Us</a>
         </li>
 
-        <!-- CART BUTTON - NOW LINKS TO SEPARATE CART PAGE -->
+        <!-- CART BUTTON  -->
         <li class="nav-item">
           <a class="nav-link cart-btn" href="cart.html">
             <i class="bi bi-cart3"></i> Cart
@@ -375,12 +381,12 @@
   </div>
 </nav>
 
-<!-- 2. SEARCH BAR (Updated with Suggestions) -->
+<!-- 2. SEARCH BAR -->
 <div class="container my-4">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="search-bar">
-        <input type="text" id="searchInput" class="form-control d-inline" style="width: 75%; display: inline-block;" placeholder="Search mirrorless cameras...">
+        <input type="text" id="searchInput" class="form-control "  placeholder="Search mirrorless cameras...">
         <button class="btn btn-primary" id="searchButton" style="border: 2px solid #2c3e50;">Search</button>
         <div id="searchSuggestions" class="search-suggestions"></div>
       </div>
