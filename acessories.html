@@ -74,30 +74,35 @@
     }
 
     /* Search bar with suggestions */
-    .search-bar {
-      text-align: center;
-    }
-
-    /* .search-bar input {
-      padding: 10px;
-      width: 70%;
-      border: 2px solid var(--primary);
-      border-radius: 5px;
-    } */
-
-    .search-bar input {
-    padding: 10px;
-    width: 70%;
-    max-width: 500px;
-    width: 100%;
-    border: 2px solid var(--primary);
-    border-radius: 5px;
+ .search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
 }
-    .search-bar button {
-      padding: 10px 20px;
-      margin-left: 5px;
-      background-color: var(--primary);
-    }
+
+.search-bar input {
+  padding: 10px;
+  flex: 1 1 200px;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+}
+
+@media (max-width: 480px) {
+  .carousel-item img {
+    height: 220px;
+  }
+  .carousel-caption h3 {
+    font-size: 1.1rem;
+  }
+  .carousel-caption p {
+    font-size: 0.85rem;
+  }
+}
     
     .search-bar button:hover {
       background-color: var(--secondary);
@@ -355,7 +360,7 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="search-bar">
-        <input type="text" id="searchInput" class="form-control d-inline" style="width: 75%; display: inline-block;" placeholder="Search accessories...">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search accessories...">
         <button class="btn btn-primary" id="searchButton" style="border: 2px solid #2c3e50;">Search</button>
         <div id="searchSuggestions" class="search-suggestions"></div>
       </div>
