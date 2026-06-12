@@ -75,24 +75,36 @@
         }
 
         /* Search bar */
-        .search-bar {
-            text-align: center;
-        }
-
-        .search-bar input {
-    padding: 10px;
-    width: 70%;
-    max-width: 500px;
-    width: 100%;
-    border: 2px solid var(--primary);
-    border-radius: 5px;
+       
+       .search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
 }
 
-        .search-bar button {
-             background-color: var(--primary);
-            padding: 10px 20px;
-            margin-left: 5px;
-        }
+.search-bar input {
+  padding: 10px;
+  flex: 1 1 200px;
+  border: 2px solid var(--primary);
+  border-radius: 5px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+}
+
+@media (max-width: 480px) {
+  .carousel-item img {
+    height: 220px;
+  }
+  .carousel-caption h3 {
+    font-size: 1.1rem;
+  }
+  .carousel-caption p {
+    font-size: 0.85rem;
+  }
+}
         .search-bar button:hover {
       background-color: var(--secondary);
     }
@@ -319,7 +331,7 @@
 </head>
 <body>
 
-<!-- 1. NAVBAR (Updated with Cart) -->
+<!-- 1. NAVBAR  -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
   <div class="container">
     <a class="navbar-brand" href="index2.html">
@@ -370,12 +382,12 @@
   </div>
 </nav>
 
-<!-- 2. SEARCH BAR (Updated with Suggestions) -->
+<!-- 2. SEARCH BAR  -->
 <div class="container my-4">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="search-bar">
-        <input type="text" id="searchInput" class="form-control d-inline" style="width: 75%; display: inline-block;" placeholder="Search action cameras...">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search action cameras...">
         <button class="btn btn-primary" id="searchButton" style="border: 2px solid #2c3e50;">Search</button>
         <div id="searchSuggestions" class="search-suggestions"></div>
       </div>
@@ -522,9 +534,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
 <script>
-  // ============================================
-  // ACTION CAMERA PAGE WITH SEPARATE CART PAGE
-  // ============================================
+
 
   // Array of camera objects
   var cameras = [
@@ -551,9 +561,7 @@
     {name: "Memory Card", page: "acessories.html", type: "accessory"}
   ];
 
-  // ============================================
-  // CART COUNTER FUNCTIONALITY
-  // ============================================
+
 
   // Function to update cart count in navbar
   function updateCartCount() {
@@ -573,10 +581,6 @@
     // Update cart count
     cartCountElement.textContent = totalItems;
   }
-
-  // ============================================
-  // CART FUNCTIONS
-  // ============================================
 
   // Function to show messages to user
   function showMessage(message, isError) {
@@ -643,9 +647,7 @@
     }
   }
 
-  // ============================================
-  // PAGE SPECIFIC FUNCTIONS
-  // ============================================
+
 
   // Function to search cameras
   function searchCameras() {
@@ -748,9 +750,7 @@
     }
   }
 
-  // ============================================
-  // SETUP EVENT LISTENERS
-  // ============================================
+
 
   window.onload = function() {
     console.log("Action Cameras page loaded - Separate cart page system active");
